@@ -1,9 +1,22 @@
-import { Button, Card, Checkbox, Form, Input } from "antd";
+import { Button, Card, Checkbox, Form, Input, message } from "antd";
+import { loginAPI } from "../../api/user";
 import logo from "../../assets/logo.png";
 import "./index.css";
-export default function Login() {
-  const onFinish = (values) => {
-    console.log(values);
+export default function Login(props) {
+  const onFinish = async (values) => {
+    const { mobile, code } = values;
+    try {
+      const res = await loginAPI(mobile, code);
+      // 存储token
+      localStorage.setItem("geek_pc_token", res.data.token);
+      // 跳转到首页
+      props.history.push("/layout");
+      message.success("登录成功");
+    } catch (err) {
+      if (err.response) {
+        message.error(err.response.data.message, 1);
+      }
+    }
   };
   return (
     <div className="login">
@@ -16,7 +29,7 @@ export default function Login() {
           onFinish={onFinish}
           initialValues={{
             agree: true,
-            mobile: "13811111111",
+            mobile: "13911111111",
             code: "246810",
           }}
         >
