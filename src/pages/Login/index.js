@@ -1,6 +1,6 @@
 import { Button, Card, Checkbox, Form, Input, message } from "antd";
+import logo from "assets/logo.png";
 import { loginAPI } from "../../api/user";
-import logo from "../../assets/logo.png";
 import "./index.css";
 export default function Login(props) {
   const onFinish = async (values) => {
