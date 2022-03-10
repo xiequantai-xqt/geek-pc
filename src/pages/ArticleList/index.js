@@ -6,20 +6,69 @@ import {
   Form,
   Radio,
   Select,
+  Table,
 } from "antd";
+import { getArticleListAPI } from "api/article";
 import { getChannelsAPI } from "api/channels";
+import NotFound from "assets/error.png";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Article() {
   const [channelList, setChannelList] = useState([]);
+  const [articleInfo, setArticleInfo] = useState([]);
   const getChannelList = async () => {
     const res = await getChannelsAPI();
     setChannelList(res.data.channels);
   };
+  const getArticleList = async () => {
+    const res = await getArticleListAPI();
+    setArticleInfo(res.data);
+  };
   useEffect(() => {
     getChannelList();
+    getArticleList();
   }, []);
+  const columns = [
+    {
+      title: "封面",
+      dataIndex: "cover",
+      render: (val) => {
+        if (!val.images.length) {
+          return <img src={NotFound} alt="" width={100} height={60} />;
+        }
+        return <img src={val.images[0]} alt="" width={100} height={60} />;
+      },
+    },
+    {
+      title: "标题",
+      dataIndex: "title",
+    },
+    {
+      title: "状态",
+      dataIndex: "status",
+    },
+    {
+      title: "发布时间",
+      dataIndex: "pubdate",
+    },
+    {
+      title: "阅读数",
+      dataIndex: "read_count",
+    },
+    {
+      title: "评论数",
+      dataIndex: "comment_count",
+    },
+    {
+      title: "点赞数",
+      dataIndex: "like_count",
+    },
+    {
+      title: "操作",
+      dataIndex: "",
+    },
+  ];
   return (
     <div className="root">
       <Card
@@ -64,6 +113,8 @@ export default function Article() {
           </Form.Item>
         </Form>
       </Card>
+      <p>根据筛选条件共查询到{articleInfo.total_count}条结果：</p>
+      <Table dataSource={articleInfo.results} columns={columns} rowKey="id" />
     </div>
   );
 }
