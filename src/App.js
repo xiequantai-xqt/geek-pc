@@ -1,11 +1,14 @@
-import MyLayout from "pages/MyLayout";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import AuthRoute from "components/AuthRoute";
+import Layout from "pages/MyLayout";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Login from "./pages/Login";
 function App() {
   return (
     <Router>
-      <Route path="/login" component={Login} />
-      <Route path="/" component={MyLayout}></Route>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <AuthRoute path="*" component={Layout}></AuthRoute>
+      </Switch>
     </Router>
   );
 }
