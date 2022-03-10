@@ -4,7 +4,7 @@ import {
   LoginOutlined,
   PieChartOutlined,
 } from "@ant-design/icons";
-import { Button, Layout, Menu } from "antd";
+import { Button, Layout, Menu, message, Popconfirm } from "antd";
 import imgSrc from "assets/logo.png";
 import Article from "pages/Article";
 import Home from "pages/Home";
@@ -14,7 +14,15 @@ import styles from "./index.module.scss";
 
 const { Header, Sider } = Layout;
 
-export default function MyLayout() {
+export default function MyLayout(props) {
+  const onConfirm = () => {
+    // 点击了确定
+    localStorage.removeItem("geek_pc_token");
+    // 跳转到登录页
+    props.history.push("/login");
+    // 提示消息
+    message.success("退出成功");
+  };
   return (
     <Layout className={styles.layout}>
       <Header className="header">
@@ -28,15 +36,22 @@ export default function MyLayout() {
           />
         </div>
         <div className="profile">
-          <span>黑马先锋</span>
-          <Button
-            type="text"
-            color="#fff"
-            style={{ color: "#fff" }}
-            icon={<LoginOutlined />}
+          <Popconfirm
+            title="你确定要退出本系统么？"
+            okText="确定"
+            cancelText="取消"
+            onConfirm={onConfirm}
           >
-            退出
-          </Button>
+            <span>黑马先锋</span>
+            <Button
+              type="text"
+              color="#fff"
+              style={{ color: "#fff" }}
+              icon={<LoginOutlined />}
+            >
+              退出
+            </Button>
+          </Popconfirm>
         </div>
       </Header>
       <Layout style={{ height: "calc( 100vh - 64px )" }}>
