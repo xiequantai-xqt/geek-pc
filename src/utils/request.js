@@ -1,5 +1,7 @@
+import { message } from "antd";
 import axios from "axios";
 import { getToken } from "components/local";
+import history from "./history";
 
 export const baseURL = "http://geek.itheima.net";
 const instance = axios.create({
@@ -26,6 +28,10 @@ instance.interceptors.response.use(
     return response.data;
   },
   function (error) {
+    if (error.response.status === 401) {
+      history.push("/login");
+      message.error(error.message);
+    }
     return Promise.reject(error);
   }
 );
