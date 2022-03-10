@@ -32,7 +32,7 @@ export default function Article() {
           </Breadcrumb>
         }
       >
-        <Form>
+        <Form initialValues={{ status: -1, channel_id: 0 }}>
           <Form.Item label="状态" name="status">
             <Radio.Group>
               <Radio value={-1}>全部</Radio>
@@ -43,10 +43,10 @@ export default function Article() {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item label="频道">
+          <Form.Item label="频道" name="channel_id">
             <Select placeholder="请选择频道" style={{ width: 200 }}>
               {channelList.map((item) => (
-                <Select.Option value={item.name} key={item.id}>
+                <Select.Option value={item.id} key={item.id}>
                   {item.name}
                 </Select.Option>
               ))}
