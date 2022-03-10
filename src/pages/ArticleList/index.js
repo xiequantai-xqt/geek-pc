@@ -1,3 +1,4 @@
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import {
   Breadcrumb,
   Button,
@@ -6,7 +7,9 @@ import {
   Form,
   Radio,
   Select,
+  Space,
   Table,
+  Tag,
 } from "antd";
 import { getArticleListAPI } from "api/article";
 import { getChannelsAPI } from "api/channels";
@@ -17,6 +20,13 @@ import { Link } from "react-router-dom";
 export default function Article() {
   const [channelList, setChannelList] = useState([]);
   const [articleInfo, setArticleInfo] = useState([]);
+  const articleStatus = [
+    { id: -1, name: "全部", color: "magenta" },
+    { id: 0, name: "草稿", color: "orange" },
+    { id: 1, name: "待审核", color: "red" },
+    { id: 2, name: "审核通过", color: "green" },
+    { id: 3, name: "审核失败", color: "cyan" },
+  ];
   const getChannelList = async () => {
     const res = await getChannelsAPI();
     setChannelList(res.data.channels);
@@ -47,6 +57,10 @@ export default function Article() {
     {
       title: "状态",
       dataIndex: "status",
+      render: (val) => {
+        const currentItem = articleStatus.find((v) => val === v.id);
+        return <Tag color={currentItem.color}>{currentItem.name}</Tag>;
+      },
     },
     {
       title: "发布时间",
@@ -67,6 +81,19 @@ export default function Article() {
     {
       title: "操作",
       dataIndex: "",
+      render: () => {
+        return (
+          <Space>
+            <Button type="primary" shape="circle" icon={<EditOutlined />} />
+            <Button
+              type="primary"
+              danger
+              shape="circle"
+              icon={<DeleteOutlined />}
+            />
+          </Space>
+        );
+      },
     },
   ];
   return (
