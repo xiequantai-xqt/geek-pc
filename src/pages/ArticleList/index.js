@@ -7,9 +7,19 @@ import {
   Radio,
   Select,
 } from "antd";
+import { getChannelsAPI } from "api/channels";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Article() {
+  const [channelList, setChannelList] = useState([]);
+  const getChannelList = async () => {
+    const res = await getChannelsAPI();
+    setChannelList(res.data.channels);
+  };
+  useEffect(() => {
+    getChannelList();
+  }, []);
   return (
     <div className="root">
       <Card
@@ -35,9 +45,11 @@ export default function Article() {
 
           <Form.Item label="频道">
             <Select placeholder="请选择频道" style={{ width: 200 }}>
-              <Select.Option value="jack">Jack</Select.Option>
-              <Select.Option value="lucy">Lucy</Select.Option>
-              <Select.Option value="Yiminghe">yiminghe</Select.Option>
+              {channelList.map((item) => (
+                <Select.Option value={item.name} key={item.id}>
+                  {item.name}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
 
