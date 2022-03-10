@@ -102,6 +102,26 @@ export default function Article() {
     articleRef.current = { page, per_page };
     getArticleList(articleRef.current);
   };
+  const onSubmitForm = (values) => {
+    const formData = { ...values };
+    if (values.status === -1) {
+      delete formData.status;
+    }
+    if (values.date) {
+      const startTime = values.date[0]
+        .startOf("day")
+        .format("YYYY-MM-DD HH:mm:ss");
+      const endTime = values.date[1].endOf("day").format("YYYY-MM-DD HH:mm:ss");
+      formData.begin_pubdate = startTime;
+      formData.end_pubdate = endTime;
+    }
+    delete formData.date;
+    formData.page = 1;
+    formData.per_page = 10;
+    articleRef.current = formData;
+    console.log(articleRef.current);
+    getArticleList(articleRef.current);
+  };
   return (
     <div className="root">
       <Card
@@ -114,7 +134,10 @@ export default function Article() {
           </Breadcrumb>
         }
       >
-        <Form initialValues={{ status: -1, channel_id: 0 }}>
+        <Form
+          initialValues={{ status: -1, channel_id: 0 }}
+          onFinish={onSubmitForm}
+        >
           <Form.Item label="状态" name="status">
             <Radio.Group>
               <Radio value={-1}>全部</Radio>
@@ -135,7 +158,7 @@ export default function Article() {
             </Select>
           </Form.Item>
 
-          <Form.Item label="日期">
+          <Form.Item label="日期" name="date">
             <DatePicker.RangePicker />
           </Form.Item>
 
