@@ -97,11 +97,12 @@ export default function Article() {
       },
     },
   ];
-  // 第几页、每页有多少项
+  // 跳转页码，第几页、每页有多少项
   const handlePageChange = (page, per_page) => {
-    articleRef.current = { page, per_page };
+    articleRef.current = { ...(articleRef.current || {}), page, per_page };
     getArticleList(articleRef.current);
   };
+  // 开始筛选
   const onSubmitForm = (values) => {
     const formData = { ...values };
     if (values.status === -1) {
