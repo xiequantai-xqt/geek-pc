@@ -6,9 +6,13 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu } from "antd";
 import imgSrc from "assets/logo.png";
+import Article from "pages/Article";
+import Home from "pages/Home";
+import Publish from "pages/Publish";
+import { Link, Redirect, Route, Switch } from "react-router-dom";
 import styles from "./index.module.scss";
 
-const { Header, Sider, Content } = Layout;
+const { Header, Sider } = Layout;
 
 export default function MyLayout() {
   return (
@@ -44,34 +48,24 @@ export default function MyLayout() {
             defaultOpenKeys={["sub1"]}
             style={{ height: "100%", borderRight: 0 }}
           >
-            {/* 1. MenuItem改造key为路径名称 */}
             <Menu.Item key="/home" icon={<PieChartOutlined />}>
-              数据概览
+              <Link to="/home">数据概览</Link>
             </Menu.Item>
             <Menu.Item key="/list" icon={<CopyOutlined />}>
-              内容管理
+              <Link to="/article">内容管理</Link>
             </Menu.Item>
             <Menu.Item key="/publish" icon={<EditOutlined />}>
-              发布文章
+              <Link to="/publish">发布文章</Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          {/* <Switch>
-              <Redirect from="/" to="/home" exact></Redirect>
-              <Route path="/home" component={Home}></Route>
-              
-            </Switch> */}
-          <Content
-            className="site-layout-background"
-            style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-            }}
-          >
-            Content
-          </Content>
+          <Switch>
+            <Redirect from="/" to="/home" exact></Redirect>
+            <Route path="/home" component={Home}></Route>
+            <Route path="/article" component={Article}></Route>
+            <Route path="/publish" component={Publish} />
+          </Switch>
         </Layout>
       </Layout>
     </Layout>
