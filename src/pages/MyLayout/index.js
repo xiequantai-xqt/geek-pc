@@ -6,6 +6,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Layout, Menu, message, Popconfirm } from "antd";
 import imgSrc from "assets/logo.png";
+import { removeToken } from "components/local";
 import Article from "pages/Article";
 import Home from "pages/Home";
 import Publish from "pages/Publish";
@@ -17,7 +18,7 @@ const { Header, Sider } = Layout;
 export default function MyLayout(props) {
   const onConfirm = () => {
     // 点击了确定
-    localStorage.removeItem("geek_pc_token");
+    removeToken();
     // 跳转到登录页
     props.history.push("/login");
     // 提示消息

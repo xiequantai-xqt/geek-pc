@@ -1,5 +1,6 @@
 import { Button, Card, Checkbox, Form, Input, message } from "antd";
 import logo from "assets/logo.png";
+import { setToken } from "components/local";
 import { loginAPI } from "../../api/user";
 import styles from "./index.module.scss";
 export default function Login(props) {
@@ -8,7 +9,7 @@ export default function Login(props) {
     try {
       const res = await loginAPI(mobile, code);
       // 存储token
-      localStorage.setItem("geek_pc_token", res.data.token);
+      setToken(res.data.token);
       // 跳转到首页
       props.history.push("/");
       message.success("登录成功");
