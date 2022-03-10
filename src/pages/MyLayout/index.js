@@ -8,7 +8,7 @@ import { Button, Layout, Menu, message, Popconfirm } from "antd";
 import { getUserInfoAPI } from "api/user";
 import imgSrc from "assets/logo.png";
 import { removeToken } from "components/local";
-import Article from "pages/Article";
+import Article from "pages/ArticleList";
 import Home from "pages/Home";
 import Publish from "pages/Publish";
 import { useEffect, useState } from "react";
