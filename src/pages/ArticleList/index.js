@@ -80,8 +80,8 @@ export default function Article() {
     },
     {
       title: "操作",
-      dataIndex: "",
-      render: () => {
+      key: "action",
+      render: (value, record, index) => {
         return (
           <Space>
             <Button type="primary" shape="circle" icon={<EditOutlined />} />
@@ -96,6 +96,10 @@ export default function Article() {
       },
     },
   ];
+  // 第几页、每页有多少项
+  const handlePageChange = (page, pageSize) => {
+    console.log(page, pageSize);
+  };
   return (
     <div className="root">
       <Card
@@ -141,7 +145,18 @@ export default function Article() {
         </Form>
       </Card>
       <p>根据筛选条件共查询到{articleInfo.total_count}条结果：</p>
-      <Table dataSource={articleInfo.results} columns={columns} rowKey="id" />
+      <Table
+        dataSource={articleInfo.results}
+        columns={columns}
+        rowKey="id"
+        pagination={{
+          onChange: handlePageChange,
+          position: ["bottomCenter "],
+          pageSize: articleInfo.perPage,
+          total: articleInfo.total_count,
+          current: articleInfo.page,
+        }}
+      />
     </div>
   );
 }
