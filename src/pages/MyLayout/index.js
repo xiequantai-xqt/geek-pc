@@ -5,17 +5,20 @@ import {
   PieChartOutlined,
 } from "@ant-design/icons";
 import { Button, Layout, Menu, message, Popconfirm } from "antd";
+import { getUserInfoAPI } from "api/user";
 import imgSrc from "assets/logo.png";
 import { removeToken } from "components/local";
 import Article from "pages/Article";
 import Home from "pages/Home";
 import Publish from "pages/Publish";
+import { useEffect, useState } from "react";
 import { Link, Redirect, Route, Switch } from "react-router-dom";
 import styles from "./index.module.scss";
 
 const { Header, Sider } = Layout;
 
 export default function MyLayout(props) {
+  const [userInfo, setUserInfo] = useState({});
   const onConfirm = () => {
     // 点击了确定
     removeToken();
@@ -24,6 +27,13 @@ export default function MyLayout(props) {
     // 提示消息
     message.success("退出成功");
   };
+  const getUserInfoFn = async () => {
+    const res = await getUserInfoAPI();
+    setUserInfo(res.data);
+  };
+  useEffect(() => {
+    getUserInfoFn();
+  }, []);
   return (
     <Layout className={styles.layout}>
       <Header className="header">
@@ -43,7 +53,7 @@ export default function MyLayout(props) {
             cancelText="取消"
             onConfirm={onConfirm}
           >
-            <span>黑马先锋</span>
+            <span>{userInfo.name}</span>
             <Button
               type="text"
               color="#fff"

@@ -10,3 +10,9 @@ export const loginAPI = (mobile, code) => {
     },
   });
 };
+// 获取用户信息
+export const getUserInfoAPI = () => {
+  return request({
+    url: "/v1_0/user/profile",
+  });
+};
