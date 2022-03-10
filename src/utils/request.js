@@ -19,7 +19,6 @@ instance.interceptors.request.use(
 // 响应拦截器
 instance.interceptors.response.use(
   function (response) {
-    // 💥小小的改造，多解构了一个data，再返回
     return response.data;
   },
   function (error) {

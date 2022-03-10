@@ -1,7 +1,8 @@
 import { Button, Card, Checkbox, Form, Input, message } from "antd";
 import logo from "assets/logo.png";
 import { loginAPI } from "../../api/user";
-import "./index.css";
+// import "./index.css";
+import styles from "./index.module.scss";
 export default function Login(props) {
   const onFinish = async (values) => {
     const { mobile, code } = values;
@@ -19,7 +20,7 @@ export default function Login(props) {
     }
   };
   return (
-    <div className="login">
+    <div className={styles.login}>
       <Card className="login-container">
         <img className="login-logo" src={logo} alt="" />
         {/* 表单 */}

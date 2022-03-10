@@ -1,5 +1,5 @@
 import request from "../utils/request";
-
+// 登录
 export const loginAPI = (mobile, code) => {
   return request({
     method: "POST",
