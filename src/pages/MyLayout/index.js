@@ -70,14 +70,13 @@ export default function MyLayout(props) {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["/home"]}
-            defaultOpenKeys={["sub1"]}
+            defaultSelectedKeys={[props.location.pathname]}
             style={{ height: "100%", borderRight: 0 }}
           >
             <Menu.Item key="/home" icon={<PieChartOutlined />}>
               <Link to="/home">数据概览</Link>
             </Menu.Item>
-            <Menu.Item key="/list" icon={<CopyOutlined />}>
+            <Menu.Item key="/article" icon={<CopyOutlined />}>
               <Link to="/article">内容管理</Link>
             </Menu.Item>
             <Menu.Item key="/publish" icon={<EditOutlined />}>
