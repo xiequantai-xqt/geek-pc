@@ -14,7 +14,7 @@ import {
 import { getArticleListAPI } from "api/article";
 import { getChannelsAPI } from "api/channels";
 import NotFound from "assets/error.png";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Article() {
@@ -27,17 +27,18 @@ export default function Article() {
     { id: 2, name: "审核通过", color: "green" },
     { id: 3, name: "审核失败", color: "cyan" },
   ];
+  const articleRef = useRef({});
   const getChannelList = async () => {
     const res = await getChannelsAPI();
     setChannelList(res.data.channels);
   };
-  const getArticleList = async () => {
-    const res = await getArticleListAPI();
+  const getArticleList = async (articleInfoParam) => {
+    const res = await getArticleListAPI(articleInfoParam);
     setArticleInfo(res.data);
   };
   useEffect(() => {
     getChannelList();
-    getArticleList();
+    getArticleList(articleRef.current);
   }, []);
   const columns = [
     {
@@ -97,8 +98,9 @@ export default function Article() {
     },
   ];
   // 第几页、每页有多少项
-  const handlePageChange = (page, pageSize) => {
-    console.log(page, pageSize);
+  const handlePageChange = (page, per_page) => {
+    articleRef.current = { page, per_page };
+    getArticleList(articleRef.current);
   };
   return (
     <div className="root">
@@ -154,7 +156,7 @@ export default function Article() {
           position: ["bottomCenter "],
           pageSize: articleInfo.perPage,
           total: articleInfo.total_count,
-          current: articleInfo.page,
+          current: articleRef.current.page || 1,
         }}
       />
     </div>
