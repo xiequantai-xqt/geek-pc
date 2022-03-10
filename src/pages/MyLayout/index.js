@@ -84,7 +84,13 @@ export default function MyLayout(props) {
             </Menu.Item>
           </Menu>
         </Sider>
-        <Layout>
+        <Layout
+          style={{
+            padding: "0 24px 24px",
+            height: "calc(100vh - 64px)",
+            overflow: "auto",
+          }}
+        >
           <Switch>
             <Redirect from="/" to="/home" exact></Redirect>
             <Route path="/home" component={Home}></Route>
