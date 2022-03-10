@@ -1,0 +1,29 @@
+.layout {
+  :global {
+    .logo {
+      float: left;
+      width: 120px;
+      height: 31px;
+    }
+
+    .ant-row-rtl .logo {
+      float: right;
+      margin: 16px 0 16px 24px;
+    }
+
+    .site-layout-background {
+      background: #fff;
+    }
+
+    .profile {
+      display: flex;
+      justify-content: flex-end;
+
+      align-items: center;
+
+      > span {
+        color: #fff;
+      }
+    }
+  }
+}
