@@ -1,17 +1,22 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  ExclamationCircleOutlined,
+} from "@ant-design/icons";
 import {
   Breadcrumb,
   Button,
   Card,
   DatePicker,
   Form,
+  Modal,
   Radio,
   Select,
   Space,
   Table,
   Tag,
 } from "antd";
-import { getArticleListAPI } from "api/article";
+import { delArticleAPI, getArticleListAPI } from "api/article";
 import { getChannelsAPI } from "api/channels";
 import NotFound from "assets/error.png";
 import { useEffect, useRef, useState } from "react";
@@ -91,6 +96,7 @@ export default function Article() {
               danger
               shape="circle"
               icon={<DeleteOutlined />}
+              onClick={() => delArticle(value)}
             />
           </Space>
         );
@@ -122,6 +128,19 @@ export default function Article() {
     articleRef.current = formData;
     console.log(articleRef.current);
     getArticleList(articleRef.current);
+  };
+  // 删除文章
+  const delArticle = (value) => {
+    Modal.confirm({
+      title: "您确定删除此文章？",
+      icon: <ExclamationCircleOutlined />,
+      okText: "确认",
+      cancelText: "取消",
+      onOk: async () => {
+        await delArticleAPI(value.id);
+        getArticleList(articleRef.current);
+      },
+    });
   };
   return (
     <div className="root">
